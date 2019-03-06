@@ -4,14 +4,8 @@ welcome = """
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <!--
-    Copyright 2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
-        http://aws.Amazon/apache2.0/
-    or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-  -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>Welcome</title>
+  <title>Save The Human Project</title>
   <style>
   body {
     color: #ffffff;
@@ -82,9 +76,9 @@ welcome = """
 </head>
 <body id="sample">
   <div class="textColumn">
-    <h1>Congratulations</h1>
-    <p>Your first AWS Elastic Beanstalk Python Application is now running on your own dedicated environment in the AWS Cloud</p>
-  </div>
+  <h1> Stop Human Trafficking</h1>
+    <h3> Save The Human Project</h3>
+   </div>
   
   <div class="linksColumn"> 
     <h2>Upload Photo</h2>
