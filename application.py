@@ -36,6 +36,13 @@ def application(environ, start_response):
                 logger.info("Received message: %s" % request_body)
             elif path == '/scheduled':
                 logger.info("Received task %s scheduled at %s", environ['HTTP_X_AWS_SQSD_TASKNAME'], environ['HTTP_X_AWS_SQSD_SCHEDULED_AT'])
+            elif path == 'check':
+                logger.info("Received content of length: %s" % environ['CONTENT_LENGTH'])
+                logger.info("Received content of type: %s" % environ['CONTENT_TYPE'])
+                logger.info("Saved the image as req.jpg")
+                f = open('req.jpg', 'w')
+                f.write(environ['wsgi.input'].read(request_body_size).decode())
+                f.close()
         except (TypeError, ValueError):
             logger.warning('Error retrieving request body for async work.')
         response = ''
