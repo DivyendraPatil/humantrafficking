@@ -28,6 +28,8 @@ logger.addHandler(handler)
 def application(environ, start_response):
     path    = environ['PATH_INFO']
     method  = environ['REQUEST_METHOD']
+    response = None
+    
     if method == 'POST':
         try:
             if path == '/':
@@ -50,10 +52,12 @@ def application(environ, start_response):
             response = ''
     else:
         response = welcome
+
     status = '200 OK'
     headers = [('Content-type', 'text/html')]
 
     start_response(status, headers)
+    
     return [response]
 
 
