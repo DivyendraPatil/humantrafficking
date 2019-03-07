@@ -42,8 +42,8 @@ def application(environ, start_response):
                 logger.info("Received content of length: %d" % request_body_size)
                 logger.info("Received content of type: %s" % environ['CONTENT_TYPE'])
                 logger.info("Saved the image as req.jpg")
-                f = open('/tmp/req.jpg', 'w')
-                f.write(environ['wsgi.input'].read(request_body_size).decode())
+                f = open('/tmp/req.jpg', 'wb')
+                f.write(environ['wsgi.input'].read(request_body_size))
                 f.close()
                 response = welcome
         except (TypeError, ValueError):
