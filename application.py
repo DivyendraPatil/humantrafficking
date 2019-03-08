@@ -2,6 +2,7 @@ import logging
 import logging.handlers
 import subprocess
 import time
+import os
 
 from html_pages import *
 
@@ -55,6 +56,7 @@ def application(environ, start_response):
                     for line in exif_result.split('\n'):
                         if line.lower() contains 'gps':
                             response += line + html_newline
+                    os.remove(filename)
                     logger.info("Processed the image")
                 else:
                     logger.error("Exiftool couldn't process image")
