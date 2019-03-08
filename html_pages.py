@@ -9,8 +9,8 @@ web_header = """
   <title>Save The Human Project</title>
   <style>
   body {
-    color: #ffffff;
-    background-color: #E0E0E0;
+    color: #000000;
+    background-color: #C0C0C0;
     font-family: Arial, sans-serif;
     font-size:14px;
     -moz-transition-property: text-shadow;
