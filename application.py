@@ -53,7 +53,7 @@ def application(environ, start_response):
                 exif_result = subprocess.run(['exiftool', filename], stdout=subprocess.PIPE)
                 if exif_result.returncode == 0:
                     exif_result = str(exif_result.stdout)
-                    for line in exif_result.split('\n'):
+                    for line in exif_result.split('\\n'):
                         if 'gps' in line.lower():
                             response += line + html_newline
                     logger.info("Processed the image")
