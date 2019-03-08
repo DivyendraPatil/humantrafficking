@@ -51,16 +51,16 @@ def application(environ, start_response):
                 
                 # calling exiftool withthat file
                 exif_result = subprocess.run(['exiftool', filename], stdout=subprocess.PIPE)
-                if exif_result == 0:
+                if exif_result.returncode == 0:
                     exif_result = str(exif_result.stdout)
                     for line in exif_result.split('\n'):
                         if 'gps' in line.lower():
                             response += line + html_newline
-                    os.remove(filename)
                     logger.info("Processed the image")
                 else:
                     logger.error("Exiftool couldn't process image")
                     response += photo_submission_error
+                os.remove(filename)
                 response += photo_submission_body_end + page_end
         except (TypeError, ValueError):
             logger.warning('Error retrieving request body for async work.')
