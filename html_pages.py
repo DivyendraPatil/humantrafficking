@@ -1,6 +1,6 @@
 
 
-welcome = """
+web_header = """
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -74,8 +74,9 @@ welcome = """
     margin: 1em 0em;
   }
   </style>
-</head>
-<body id="sample">
+</head>"""
+
+welcome_body = """<body id="sample">
   <div class="textColumn">
   <h1> Stop Human Trafficking</h1>
     <h3> Save The Human Project</h3>
@@ -97,9 +98,17 @@ welcome = """
     <br>
     </ul>
   </div>
-</body>
-</html>
-"""
+</body>"""
 
-photo_submission = """
-"""
+page_end = "</html>"
+
+welcome = web_header + welcome_body + page_end
+
+photo_submission_body_start = "<body><div><p>"
+
+photo_submission_error = "Sorry we cannot process that right now.<br><br>Our monkeys are working it."
+
+photo_submission_body_end = "</p></div></body>"
+
+html_newline = "<br>"
+

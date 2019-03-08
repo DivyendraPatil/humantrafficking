@@ -1,5 +1,8 @@
 import logging
 import logging.handlers
+import subprocess
+import time
+import os
 
 from html_pages import *
 
@@ -39,13 +42,26 @@ def application(environ, start_response):
             elif path == '/scheduled':
                 logger.info("Received task %s scheduled at %s", environ['HTTP_X_AWS_SQSD_TASKNAME'], environ['HTTP_X_AWS_SQSD_SCHEDULED_AT'])
             elif path == '/check':
-                logger.info("Received content of length: %d" % request_body_size)
-                logger.info("Received content of type: %s" % environ['CONTENT_TYPE'])
-                logger.info("Saved the image as req.jpg")
-                f = open('/tmp/req.jpg', 'wb')
+                response = web_header + photo_submission_body_start
+                # saving the file received in data without checks for now
+                filename = '/tmp/' + str(int(time.time() * 10000))
+                f = open(filename, 'wb')
                 f.write(environ['wsgi.input'].read(request_body_size))
                 f.close()
-                response = welcome
+                
+                # calling exiftool withthat file
+                exif_result = subprocess.run(['exiftool', filename], stdout=subprocess.PIPE)
+                if exif_result == 0:
+                    exif_result = str(exif_result.stdout)
+                    for line in exif_result.split('\n'):
+                        if line.lower() contains 'gps':
+                            response += line + html_newline
+                    os.remove(filename)
+                    logger.info("Processed the image")
+                else:
+                    logger.error("Exiftool couldn't process image")
+                    response += photo_submission_error
+                response += photo_submission_body_end + page_end
         except (TypeError, ValueError):
             logger.warning('Error retrieving request body for async work.')
         if not response:
