@@ -54,7 +54,7 @@ def application(environ, start_response):
                 if exif_result == 0:
                     exif_result = str(exif_result.stdout)
                     for line in exif_result.split('\n'):
-                        if line.lower() contains 'gps':
+                        if 'gps' in line.lower():
                             response += line + html_newline
                     os.remove(filename)
                     logger.info("Processed the image")
