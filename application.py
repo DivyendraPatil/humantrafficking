@@ -1,5 +1,7 @@
 import logging
 import logging.handlers
+import subprocess
+import time
 
 from html_pages import *
 
@@ -28,23 +30,48 @@ logger.addHandler(handler)
 def application(environ, start_response):
     path    = environ['PATH_INFO']
     method  = environ['REQUEST_METHOD']
+    response = None
+    
     if method == 'POST':
         try:
+            request_body_size = int(environ['CONTENT_LENGTH'])
             if path == '/':
-                request_body_size = int(environ['CONTENT_LENGTH'])
                 request_body = environ['wsgi.input'].read(request_body_size).decode()
                 logger.info("Received message: %s" % request_body)
             elif path == '/scheduled':
                 logger.info("Received task %s scheduled at %s", environ['HTTP_X_AWS_SQSD_TASKNAME'], environ['HTTP_X_AWS_SQSD_SCHEDULED_AT'])
+            elif path == '/check':
+                response = web_header + photo_submission_body_start
+                # saving the file received in data without checks for now
+                filename = '/tmp/' + str(int(time.time() * 10000))
+                f = open(filename, 'wb')
+                f.write(environ['wsgi.input'].read(request_body_size))
+                f.close()
+                
+                # calling exiftool withthat file
+                exif_result = subprocess.run(['exiftool', filename], stdout=subprocess.PIPE)
+                if exif_result == 0:
+                    exif_result = str(exif_result.stdout)
+                    for line in exif_result.split('\n'):
+                        if line.lower() contains 'gps':
+                            response += line + html_newline
+                    logger.info("Processed the image")
+                else:
+                    logger.error("Exiftool couldn't process image")
+                    response += photo_submission_error
+                response += photo_submission_body_end + page_end
         except (TypeError, ValueError):
             logger.warning('Error retrieving request body for async work.')
-        response = ''
+        if not response:
+            response = ''
     else:
         response = welcome
+
     status = '200 OK'
     headers = [('Content-type', 'text/html')]
 
     start_response(status, headers)
+    
     return [response]
 
 
