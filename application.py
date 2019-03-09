@@ -8,7 +8,6 @@ from html_pages import *
 
 from wsgiref.simple_server import make_server
 
-
 # Create logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
