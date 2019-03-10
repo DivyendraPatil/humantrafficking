@@ -84,7 +84,7 @@ welcome_body = """<body id="sample">
   <div class="linksColumn"> 
     <h2>Upload Photo</h2>
     <ul>
-    <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/">Upload the photo Here</a></li>
+    <li>Upload the photo Here</li>
     <br>
       <form action="check" method="post" enctype="multipart/form-data">
         <p></p>
