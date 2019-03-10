@@ -56,10 +56,11 @@ def application(environ, start_response):
                         if 'gps' in line.lower():
                             response += line + html_newline
                     logger.info("Processed the image")
+                    os.remove(filename)
                 else:
                     logger.error("Exiftool couldn't process image")
+                    logger.error("%s" % str(exif_result))
                     response += photo_submission_error
-                os.remove(filename)
                 response += photo_submission_body_end + page_end
         except (TypeError, ValueError):
             logger.warning('Error retrieving request body for async work.')
